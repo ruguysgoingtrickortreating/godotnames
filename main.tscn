@@ -1,0 +1,952 @@
+[gd_scene load_steps=28 format=3 uid="uid://cbiog01nc87le"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_biuug"]
+[ext_resource type="Texture2D" uid="uid://b2wylgjic3g2c" path="res://istockphoto-1341348395-612x612.jpg" id="2_uqeyd"]
+[ext_resource type="FontFile" uid="uid://bhj0uwpk8q43q" path="res://fonts/beekeepers/StyleB-Regular.ttf" id="3_mls58"]
+[ext_resource type="Script" path="res://scripts/connect_ui.gd" id="3_ui6km"]
+[ext_resource type="Script" path="res://lobby_ui.gd" id="5_2xnmb"]
+[ext_resource type="StyleBox" uid="uid://xx1pk5x810mm" path="res://resources/word_card_red_unsolved.tres" id="6_cp453"]
+[ext_resource type="Script" path="res://warning_panel.gd" id="7_ty0ds"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_567t2"]
+bg_color = Color(0.901961, 0.901961, 0.901961, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jps4q"]
+bg_color = Color(0.14902, 0.14902, 0.14902, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 5.0
+expand_margin_top = 3.0
+expand_margin_right = 5.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0extb"]
+bg_color = Color(0.901961, 0.901961, 0.901961, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwdvu"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ypqi0"]
+bg_color = Color(0.145098, 0.145098, 0.145098, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lq08d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tfum6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v5la3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tsxy4"]
+bg_color = Color(0.901961, 0.901961, 0.901961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4elk8"]
+bg_color = Color(0.901961, 0.784314, 0.784314, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.878431, 0.580392, 0.584314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vwdj6"]
+bg_color = Color(0.784314, 0.796078, 0.909804, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.592157, 0.596078, 0.811765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mt5w6"]
+bg_color = Color(0.145098, 0.145098, 0.145098, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k1vjp"]
+bg_color = Color(0.145098, 0.145098, 0.145098, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etstn"]
+bg_color = Color(1, 0.835294, 0, 1)
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cmqsh"]
+bg_color = Color(1, 0.886275, 0.321569, 1)
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2soq6"]
+bg_color = Color(0.85098, 0.666667, 0, 1)
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apo5j"]
+bg_color = Color(0.952941, 0.952941, 0.952941, 1)
+border_color = Color(0.721569, 0.721569, 0.721569, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_color = Color(0, 0, 0, 0.227451)
+shadow_size = 10
+shadow_offset = Vector2(8, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2k7aq"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecto5"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okh3m"]
+bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_biuug")
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(0.733333, 0.627451, 0.603922, 1)
+position = Vector2(577, 324.5)
+scale = Vector2(1.87582, 1.60049)
+texture = ExtResource("2_uqeyd")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="ConnectUI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ui6km")
+
+[node name="InfoPanel" type="Panel" parent="ConnectUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -126.0
+offset_right = 200.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0174533
+pivot_offset = Vector2(200, 100)
+theme_override_styles/panel = SubResource("StyleBoxFlat_567t2")
+
+[node name="UsernameBox" type="LineEdit" parent="ConnectUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -40.0
+offset_right = 175.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
+placeholder_text = "AGENT 007"
+max_length = 16
+caret_blink = true
+
+[node name="IPBox" type="LineEdit" parent="ConnectUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = 5.0
+offset_right = 175.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
+placeholder_text = "127.0.0.1"
+caret_blink = true
+
+[node name="PortBox" type="LineEdit" parent="ConnectUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = 50.0
+offset_right = 175.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
+placeholder_text = "1962"
+caret_blink = true
+
+[node name="CardText" type="Label" parent="ConnectUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 23.0
+offset_right = 174.0
+offset_bottom = 45.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.482353, 0.482353, 0.482353, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+text = "ENTER YOUR CREDENTIALS"
+vertical_alignment = 1
+
+[node name="HostButton" type="Button" parent="ConnectUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = 140.0
+offset_right = -56.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.0174533
+pivot_offset = Vector2(80, 42)
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.909804, 0.909804, 0.909804, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_0extb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qwdvu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ypqi0")
+text = "HOST"
+
+[node name="JoinButton" type="Button" parent="ConnectUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 65.0
+offset_top = 138.0
+offset_right = 225.0
+offset_bottom = 223.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0174533
+pivot_offset = Vector2(80, 42)
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.909804, 0.909804, 0.909804, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_0extb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qwdvu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ypqi0")
+text = "JOIN
+"
+
+[node name="Title" type="Label" parent="ConnectUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -297.321
+offset_top = -237.0
+offset_right = 296.679
+offset_bottom = -181.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.00872665
+pivot_offset = Vector2(297, 21)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 80
+text = "GODOTNAMES"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IpCopyButton" type="Button" parent="ConnectUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 617.0
+offset_right = 174.0
+offset_bottom = 639.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+focus_mode = 0
+theme_override_colors/font_color = Color(0.482353, 0.482353, 0.482353, 1)
+theme_override_colors/font_pressed_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_colors/font_hover_color = Color(0.768627, 0.768627, 0.768627, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lq08d")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tfum6")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_v5la3")
+text = "IP: GETTING..."
+
+[node name="LobbyUI" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_2xnmb")
+
+[node name="PaperBG" type="Panel" parent="LobbyUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -512.0
+offset_top = -306.0
+offset_right = 88.0
+offset_bottom = 374.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.0314159
+pivot_offset = Vector2(300, 340)
+theme_override_styles/panel = SubResource("StyleBoxFlat_tsxy4")
+
+[node name="RedBG" type="Panel" parent="LobbyUI/PaperBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.0
+offset_top = -320.0
+offset_bottom = 342.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(300, 340)
+theme_override_styles/panel = SubResource("StyleBoxFlat_4elk8")
+
+[node name="NoSpymasText" type="Label" parent="LobbyUI/PaperBG/RedBG"]
+layout_mode = 2
+offset_left = 21.0
+offset_top = 73.0
+offset_right = 229.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.870588, 0.529412, 0.529412, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 18
+text = "YOUR TEAM HAS
+NO SPYMASTER"
+vertical_alignment = 1
+
+[node name="SpymastersText" type="Label" parent="LobbyUI/PaperBG/RedBG"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 135.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.180392, 0.180392, 0.180392, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+text = "SPYMASTER"
+vertical_alignment = 1
+
+[node name="ColorText" type="Label" parent="LobbyUI/PaperBG/RedBG"]
+layout_mode = 2
+offset_left = 145.0
+offset_top = 15.0
+offset_right = 275.0
+offset_bottom = 33.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.870588, 0.529412, 0.529412, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+text = "RED"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="FOpsText" type="Label" parent="LobbyUI/PaperBG/RedBG"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 150.0
+offset_right = 226.0
+offset_bottom = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.180392, 0.180392, 0.180392, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+text = "FIELD OPERATIVES"
+vertical_alignment = 1
+
+[node name="PlayersContainer" type="ScrollContainer" parent="LobbyUI/PaperBG/RedBG"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 179.0
+offset_right = 305.0
+offset_bottom = 645.0
+
+[node name="VBox" type="VBoxContainer" parent="LobbyUI/PaperBG/RedBG/PlayersContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BlueBG" type="Panel" parent="LobbyUI/PaperBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -320.0
+offset_right = 290.0
+offset_bottom = 342.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(300, 340)
+theme_override_styles/panel = SubResource("StyleBoxFlat_vwdj6")
+
+[node name="NoSpymasText" type="Label" parent="LobbyUI/PaperBG/BlueBG"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 73.0
+offset_right = 229.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.592157, 0.596078, 0.811765, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 18
+text = "YOUR TEAM HAS
+NO SPYMASTER"
+vertical_alignment = 1
+
+[node name="SpymastersText" type="Label" parent="LobbyUI/PaperBG/BlueBG"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 135.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.180392, 0.180392, 0.180392, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+text = "SPYMASTER"
+vertical_alignment = 1
+
+[node name="ColorText" type="Label" parent="LobbyUI/PaperBG/BlueBG"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 15.0
+offset_right = 275.0
+offset_bottom = 33.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.592157, 0.596078, 0.811765, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+text = "BLUE"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="FOpsText" type="Label" parent="LobbyUI/PaperBG/BlueBG"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 150.0
+offset_right = 226.0
+offset_bottom = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.180392, 0.180392, 0.180392, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+text = "FIELD OPERATIVES"
+vertical_alignment = 1
+
+[node name="PlayersContainer" type="ScrollContainer" parent="LobbyUI/PaperBG/BlueBG"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 179.0
+offset_right = 305.0
+offset_bottom = 653.0
+
+[node name="VBox" type="VBoxContainer" parent="LobbyUI/PaperBG/BlueBG/PlayersContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="InfoPanel" type="Panel" parent="LobbyUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 152.0
+offset_top = -285.0
+offset_right = 552.0
+offset_bottom = -85.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0261799
+pivot_offset = Vector2(200, 100)
+theme_override_styles/panel = SubResource("StyleBoxFlat_567t2")
+
+[node name="HostBox" type="LineEdit" parent="LobbyUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -40.0
+offset_right = 175.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
+text = "HOST:"
+max_length = 16
+caret_blink = true
+
+[node name="IPBox" type="LineEdit" parent="LobbyUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = 5.0
+offset_right = 175.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
+text = "IP: "
+caret_blink = true
+
+[node name="PortBox" type="LineEdit" parent="LobbyUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = 50.0
+offset_right = 175.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
+text = "PORT:"
+placeholder_text = "1962"
+caret_blink = true
+
+[node name="CardText" type="Label" parent="LobbyUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 23.0
+offset_right = 174.0
+offset_bottom = 45.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.482353, 0.482353, 0.482353, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+text = "LOBBY INFORMATION"
+vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="LobbyUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 371.0
+offset_top = 149.0
+offset_right = 531.0
+offset_bottom = 234.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0174533
+pivot_offset = Vector2(80, 42)
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.909804, 0.909804, 0.909804, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_0extb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qwdvu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mt5w6")
+text = "START"
+
+[node name="LeaveButton" type="Button" parent="LobbyUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 276.0
+offset_top = 148.0
+offset_right = 436.0
+offset_bottom = 233.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.00872665
+pivot_offset = Vector2(80, 42)
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.909804, 0.909804, 0.909804, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_0extb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qwdvu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k1vjp")
+text = "LEAVE"
+
+[node name="ErrorText" type="Label" parent="LobbyUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 154.0
+offset_top = 601.0
+offset_right = 508.0
+offset_bottom = 623.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.901961, 0.901961, 0.901961, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameUI" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TurnLabel" type="Label" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -297.0
+offset_top = -254.0
+offset_right = 297.0
+offset_bottom = -212.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 60
+text = "TEAM'S TURN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WinReasonLabel" type="Label" parent="GameUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -297.0
+offset_top = -202.0
+offset_right = 297.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 30
+text = "TEAM FOUND ALL CARDS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PickedCardLabel" type="Label" parent="GameUI"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -552.0
+offset_top = -254.0
+offset_right = -193.0
+offset_bottom = -212.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 20
+text = "biden CHOSE \"AUSTRALIA\""
+vertical_alignment = 1
+
+[node name="InfoPanel" type="Panel" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -561.0
+offset_top = -149.0
+offset_right = -367.0
+offset_bottom = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.00872665
+pivot_offset = Vector2(200, 100)
+theme_override_styles/panel = ExtResource("6_cp453")
+
+[node name="Label" type="Label" parent="GameUI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 21.0
+offset_right = -10.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 25
+text = "RED TEAM
+
+SPYMASTER:
+
+BIDEN
+
+FIELD OPS:
+
+TRUMP
+OBAMA
+
+"
+autowrap_mode = 3
+
+[node name="Cards" type="Control" parent="GameUI"]
+anchors_preset = 0
+offset_left = 223.5
+offset_top = 175.0
+offset_right = 928.5
+offset_bottom = 610.0
+
+[node name="InputBlockPanel" type="ColorRect" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.5
+offset_top = -149.0
+offset_right = 352.5
+offset_bottom = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="NextTurnButton" type="Button" parent="GameUI"]
+layout_mode = 0
+offset_left = 942.0
+offset_top = 62.0
+offset_right = 1096.0
+offset_bottom = 112.0
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.133333, 0.133333, 0.133333, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_etstn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cmqsh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2soq6")
+text = "NEXT TURN "
+alignment = 2
+
+[node name="ColorRect" type="ColorRect" parent="GameUI/NextTurnButton"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_right = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.678431, 0.462745, 0.0627451, 0.392157)
+
+[node name="WarningPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.00872665
+pivot_offset = Vector2(200, 100)
+theme_override_styles/panel = SubResource("StyleBoxFlat_apo5j")
+script = ExtResource("7_ty0ds")
+
+[node name="WarningText" type="Label" parent="WarningPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 26.0
+offset_right = 174.0
+offset_bottom = 166.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 12
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 35
+text = "WARNING MESSAGE BOX"
+autowrap_mode = 3
+
+[node name="OKButton" type="Button" parent="WarningPanel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -63.0
+offset_right = -22.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_mls58")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_2k7aq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ecto5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_okh3m")
+text = "OK"
+
+[connection signal="hosting" from="ConnectUI" to="LobbyUI" method="_on_hosting"]
+[connection signal="text_changed" from="ConnectUI/InfoPanel/UsernameBox" to="ConnectUI" method="_on_username_box_text_changed"]
+[connection signal="text_changed" from="ConnectUI/InfoPanel/IPBox" to="ConnectUI" method="_on_ip_box_text_changed"]
+[connection signal="text_changed" from="ConnectUI/InfoPanel/PortBox" to="ConnectUI" method="_on_port_box_text_changed"]
+[connection signal="pressed" from="ConnectUI/HostButton" to="ConnectUI" method="on_host_pressed"]
+[connection signal="pressed" from="ConnectUI/JoinButton" to="ConnectUI" method="on_join_pressed"]
+[connection signal="pressed" from="ConnectUI/IpCopyButton" to="." method="_on_ip_copy_button_pressed"]
+[connection signal="pressed" from="LobbyUI/StartButton" to="LobbyUI" method="_on_start_button_pressed"]
+[connection signal="pressed" from="LobbyUI/LeaveButton" to="LobbyUI" method="_on_leave_button_pressed"]
+[connection signal="pressed" from="GameUI/NextTurnButton" to="." method="_on_next_turn_button_pressed"]
+[connection signal="pressed" from="WarningPanel/OKButton" to="WarningPanel" method="_on_ok_button_pressed"]

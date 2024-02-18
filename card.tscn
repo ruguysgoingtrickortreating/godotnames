@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://ct1581ebx8rrx"]
+
+[ext_resource type="FontFile" uid="uid://bhj0uwpk8q43q" path="res://fonts/beekeepers/StyleB-Regular.ttf" id="1_duast"]
+[ext_resource type="StyleBox" uid="uid://oq0ys5y6ox82" path="res://resources/word_card_default.tres" id="2_x7407"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwdvu"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_namv7"]
+bg_color = Color(0.145098, 0.145098, 0.145098, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="CardButton" type="Button"]
+offset_right = 125.0
+offset_bottom = 75.0
+pivot_offset = Vector2(80, 42)
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.909804, 0.909804, 0.909804, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_duast")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = ExtResource("2_x7407")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qwdvu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_namv7")
+text = "WORDS"
