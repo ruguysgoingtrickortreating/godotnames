@@ -35,7 +35,7 @@ var win_screen
 
 func _init():
 	if OS.has_feature("standalone"):
-		var path = OS.get_executable_path().get_base_dir().path_join("wordlist.txt")
+		#var path = OS.get_executable_path().get_base_dir().path_join("wordlist.txt")
 		names_file = FileAccess.open("res://wordlist.txt", FileAccess.READ)
 	else:
 		names_file = FileAccess.open("res://wordlist.txt", FileAccess.READ)
@@ -50,57 +50,69 @@ func check_card(index:int):
 	var card:Button = card_instances[index/5][index%5]
 	var cardteam:int = card_teams[index/5][index%5]
 	var cardtext:String = card_names[index/5][index%5]
-	if red_team.find(multiplayer.get_remote_sender_id()) == -1:
+	var id = multiplayer.get_remote_sender_id()
+	var username = MultiplayerManager.players[id].name
+	if red_team.find(id) == -1:
 		red = false
-		flash_picked_card_msg(Color(0.4,0.5,1,0),MultiplayerManager.players[multiplayer.get_remote_sender_id()].name + " PICKED \""+cardtext+"\"")
+		$GameUI/PickedCardLabel.push_color(Color(0.4,0.5,1))
+		$GameUI/PickedCardLabel.append_text("\n"+username)
+		$GameUI/PickedCardLabel.pop()
+		$GameUI/PickedCardLabel.append_text(" PICKED \"")
 	else:
 		red = true
-		flash_picked_card_msg(Color(1,0.5,0.5,0),MultiplayerManager.players[multiplayer.get_remote_sender_id()].name + " PICKED \""+cardtext+"\"")
+		$GameUI/PickedCardLabel.push_color(Color(1,0.5,0.5))
+		$GameUI/PickedCardLabel.append_text("\n"+username)
+		$GameUI/PickedCardLabel.pop()
+		$GameUI/PickedCardLabel.append_text(" PICKED \"")
 	card.disabled = true
 	match cardteam:
 		0:
 			card.set("theme_override_styles/disabled",civillian_theme)
+			$GameUI/PickedCardLabel.push_color(Color(1,0.8,0.55))
+			$AnswerAudioWrong.play()
 			if MultiplayerManager.peer.get_unique_id() == 1:
 				if red:
 					advance_to_blue_turn.rpc()
-					if self_red:
-						$AnswerAudioWrong.play()
 				else:
 					advance_to_red_turn.rpc()
-					if not self_red:
-						$AnswerAudioWrong.play()
 		1:
 			red_found += 1
 			card.set("theme_override_styles/disabled",red_theme)
 			card.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
+			$GameUI/PickedCardLabel.push_color(Color(1,0.5,0.5))
 			if not red:
 				if MultiplayerManager.peer.get_unique_id() == 1:
 					advance_to_red_turn.rpc()
-				if not self_red:
-					$AnswerAudioWrong.play()
-			elif self_red:
+				$AnswerAudioWrong.play()
+			else:
 				$AnswerAudioRight.play()
 			#card_node.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
 		2:
 			blue_found += 1
 			card.set("theme_override_styles/disabled",blue_theme)
 			card.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
+			$GameUI/PickedCardLabel.push_color(Color(0.4,0.5,1))
 			if red:
 				if MultiplayerManager.peer.get_unique_id() == 1:
 					advance_to_blue_turn.rpc()
-				if self_red:
-					$AnswerAudioWrong.play()
-			elif not self_red:
+				$AnswerAudioWrong.play()
+			else:
 				$AnswerAudioRight.play()
 			#card_node.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
 		3:
 			card.set("theme_override_styles/disabled",assassin_theme)
 			card.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
+			$GameUI/PickedCardLabel.push_color(Color(0,0,0))
+			$GameUI/PickedCardLabel.push_outline_color(Color(1,1,1))
+			$GameUI/PickedCardLabel.push_outline_size(5)
 			$AnswerAudioAssassin.play()
 			if red:
 				win_game.rpc(false,"RED FOUND THE ASSASSIN")
 			else:
 				win_game.rpc(true,"BLUE FOUND THE ASSASSIN")
+	$GameUI/PickedCardLabel.append_text(cardtext)
+	$GameUI/PickedCardLabel.pop_all()
+	$GameUI/PickedCardLabel.append_text("\"")
 	if MultiplayerManager.peer.get_unique_id() == 1:
 		if red_found == red_total:
 			win_game.rpc(true,"RED FOUND ALL CARDS")
@@ -146,12 +158,13 @@ func _ready():
 	if error == 7:
 		$WarningPanel/WarningText.text = "NO WORDLIST FOUND. GAME WILL NOT WORK."
 		$WarningPanel.visible = true
+	$GameUI/PickedCardLabel.get_v_scroll_bar().size_flags_vertical = 0
 
-func flash_picked_card_msg(color,text):
-	var tween = get_tree().create_tween()
-	$GameUI/PickedCardLabel.text = text
-	$GameUI/PickedCardLabel.modulate = Color(color.r,color.g,color.b,1)
-	tween.tween_property($GameUI/PickedCardLabel,"modulate",color,3).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+#func flash_picked_card_msg(color,text):
+	#var tween = get_tree().create_tween()
+	#$GameUI/PickedCardLabel.text = text
+	#$GameUI/PickedCardLabel.modulate = Color(color.r,color.g,color.b,1)
+	#tween.tween_property($GameUI/PickedCardLabel,"modulate",color,3).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 
 func _on_request_completed(result, response_code, headers, body):
 	update_ip(body.get_string_from_utf8())

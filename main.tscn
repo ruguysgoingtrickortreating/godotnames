@@ -780,25 +780,16 @@ text = "TEAM FOUND ALL CARDS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PickedCardLabel" type="Label" parent="GameUI"]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -552.0
-offset_top = -254.0
-offset_right = -193.0
-offset_bottom = -212.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(297, 21)
-theme_override_fonts/font = ExtResource("3_mls58")
-theme_override_font_sizes/font_size = 20
-text = "biden CHOSE \"AUSTRALIA\""
-vertical_alignment = 1
+[node name="PickedCardLabel" type="RichTextLabel" parent="GameUI"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 25.0
+offset_right = 379.0
+offset_bottom = 150.0
+theme_override_fonts/normal_font = ExtResource("3_mls58")
+theme_override_font_sizes/normal_font_size = 23
+bbcode_enabled = true
+scroll_following = true
 
 [node name="InfoPanel" type="Panel" parent="GameUI"]
 layout_mode = 1
