@@ -52,7 +52,7 @@ func check_card(index:int):
 	var cardtext:String = card_names[index/5][index%5]
 	if red_team.find(multiplayer.get_remote_sender_id()) == -1:
 		red = false
-		flash_picked_card_msg(Color(0.4,0.5,1,1),MultiplayerManager.players[multiplayer.get_remote_sender_id()].name + " PICKED \""+cardtext+"\"")
+		flash_picked_card_msg(Color(0.4,0.5,1,0),MultiplayerManager.players[multiplayer.get_remote_sender_id()].name + " PICKED \""+cardtext+"\"")
 	else:
 		red = true
 		flash_picked_card_msg(Color(1,0.5,0.5,0),MultiplayerManager.players[multiplayer.get_remote_sender_id()].name + " PICKED \""+cardtext+"\"")
@@ -63,25 +63,40 @@ func check_card(index:int):
 			if MultiplayerManager.peer.get_unique_id() == 1:
 				if red:
 					advance_to_blue_turn.rpc()
+					if self_red:
+						$AnswerAudioWrong.play()
 				else:
 					advance_to_red_turn.rpc()
+					if not self_red:
+						$AnswerAudioWrong.play()
 		1:
 			red_found += 1
 			card.set("theme_override_styles/disabled",red_theme)
 			card.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
-			if MultiplayerManager.peer.get_unique_id() == 1 and not red:
-				advance_to_red_turn.rpc()
+			if not red:
+				if MultiplayerManager.peer.get_unique_id() == 1:
+					advance_to_red_turn.rpc()
+				if not self_red:
+					$AnswerAudioWrong.play()
+			elif self_red:
+				$AnswerAudioRight.play()
 			#card_node.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
 		2:
 			blue_found += 1
 			card.set("theme_override_styles/disabled",blue_theme)
 			card.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
-			if MultiplayerManager.peer.get_unique_id() == 1 and red:
-				advance_to_blue_turn.rpc()
+			if red:
+				if MultiplayerManager.peer.get_unique_id() == 1:
+					advance_to_blue_turn.rpc()
+				if self_red:
+					$AnswerAudioWrong.play()
+			elif not self_red:
+				$AnswerAudioRight.play()
 			#card_node.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
 		3:
 			card.set("theme_override_styles/disabled",assassin_theme)
 			card.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
+			$AnswerAudioAssassin.play()
 			if red:
 				win_game.rpc(false,"RED FOUND THE ASSASSIN")
 			else:
@@ -101,6 +116,7 @@ func advance_to_red_turn():
 	$GameUI/NextTurnButton.visible = false
 	if self_red:
 		$GameUI/InputBlockPanel.visible = false
+		$TurnAudio.play()
 	else:
 		$GameUI/InputBlockPanel.visible = true
 	if MultiplayerManager.peer.get_unique_id() == red_spymas:
@@ -116,6 +132,7 @@ func advance_to_blue_turn():
 	if self_red:
 		$GameUI/InputBlockPanel.visible = true
 	else:
+		$TurnAudio.play()
 		$GameUI/InputBlockPanel.visible = false
 	if MultiplayerManager.peer.get_unique_id() == blue_spymas:
 		$GameUI/NextTurnButton.visible = true

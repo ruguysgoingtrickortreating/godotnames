@@ -1,10 +1,14 @@
-[gd_scene load_steps=28 format=3 uid="uid://cbiog01nc87le"]
+[gd_scene load_steps=32 format=3 uid="uid://cbiog01nc87le"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_biuug"]
+[ext_resource type="AudioStream" uid="uid://lef3ly5m5epi" path="res://audio/pistol_ready.mp3" id="2_c2ieo"]
 [ext_resource type="Texture2D" uid="uid://b2wylgjic3g2c" path="res://istockphoto-1341348395-612x612.jpg" id="2_uqeyd"]
 [ext_resource type="FontFile" uid="uid://bhj0uwpk8q43q" path="res://fonts/beekeepers/StyleB-Regular.ttf" id="3_mls58"]
+[ext_resource type="AudioStream" uid="uid://bhsyfdggpjxlg" path="res://audio/9mm_gunshot.mp3" id="3_pl3ar"]
 [ext_resource type="Script" path="res://scripts/connect_ui.gd" id="3_ui6km"]
+[ext_resource type="AudioStream" uid="uid://ci516p65med2" path="res://audio/click.mp3" id="4_xusso"]
 [ext_resource type="Script" path="res://lobby_ui.gd" id="5_2xnmb"]
+[ext_resource type="AudioStream" uid="uid://dxih0q0fyom0f" path="res://audio/shotgun_gunshot.mp3" id="5_k3ogy"]
 [ext_resource type="StyleBox" uid="uid://xx1pk5x810mm" path="res://resources/word_card_red_unsolved.tres" id="6_cp453"]
 [ext_resource type="Script" path="res://warning_panel.gd" id="7_ty0ds"]
 
@@ -141,6 +145,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_biuug")
+
+[node name="TurnAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_c2ieo")
+
+[node name="AnswerAudioWrong" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_pl3ar")
+
+[node name="AnswerAudioRight" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_xusso")
+
+[node name="AnswerAudioAssassin" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_k3ogy")
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.733333, 0.627451, 0.603922, 1)
