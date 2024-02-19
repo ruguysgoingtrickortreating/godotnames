@@ -193,7 +193,7 @@ theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.66666
 theme_override_fonts/font = ExtResource("3_mls58")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
-placeholder_text = "AGENT 007"
+placeholder_text = "NAME: AGENT 007"
 max_length = 16
 caret_blink = true
 
@@ -214,7 +214,7 @@ theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.66666
 theme_override_fonts/font = ExtResource("3_mls58")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
-placeholder_text = "127.0.0.1"
+placeholder_text = "IP: 127.0.0.1"
 caret_blink = true
 
 [node name="PortBox" type="LineEdit" parent="ConnectUI/InfoPanel"]
@@ -234,7 +234,7 @@ theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.66666
 theme_override_fonts/font = ExtResource("3_mls58")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
-placeholder_text = "1962"
+placeholder_text = "PORT: 1962"
 caret_blink = true
 
 [node name="CardText" type="Label" parent="ConnectUI/InfoPanel"]

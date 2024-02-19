@@ -14,6 +14,7 @@ var idcards:Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("open error: ",FileAccess.get_open_error())
 	MultiplayerManager.player_added.connect(player_added)
 	MultiplayerManager.connected_to_server.connect(connected_to_server)
 	MultiplayerManager.player_removed.connect(player_removed)
@@ -204,6 +205,7 @@ func _on_leave_button_pressed():
 	MultiplayerManager.disconnect_network(0)
 
 func _on_start_button_pressed():
+	print("start pressed")
 	if main.blue_fieldops.size() < 1 or main.red_fieldops.size() < 1:
 		$ErrorText.text = "NOT ENOUGH PLAYERS"
 		return

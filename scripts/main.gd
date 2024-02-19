@@ -3,8 +3,8 @@ extends Control
 var card_teams = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]] #5x5 2d matrix
 var card_names = [["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""]]
 var card_instances = [[null,null,null,null,null],[null,null,null,null,null],[null,null,null,null,null],[null,null,null,null,null],[null,null,null,null,null]]
-var names_file = FileAccess.open("res://wordlist-eng.txt", FileAccess.READ)
-var names_list = names_file.get_as_text().split("\n",false) # \n means newline character
+var names_file
+var names_list
 var card_scene:PackedScene = load("res://card.tscn")
 
 var default_theme = load("res://resources/word_card_default.tres")
@@ -33,6 +33,13 @@ var self_red
 var ongoing_game
 var win_screen
 
+func _init():
+	if OS.has_feature("standalone"):
+		var path = OS.get_executable_path().get_base_dir().path_join("wordlist.txt")
+		names_file = FileAccess.open("res://wordlist.txt", FileAccess.READ)
+	else:
+		names_file = FileAccess.open("res://wordlist.txt", FileAccess.READ)
+	names_list = names_file.get_as_text().split("\n",false) # \n means newline character
 
 func card_pressed(index):
 	check_card.rpc(index)
@@ -79,11 +86,6 @@ func check_card(index:int):
 				win_game.rpc(false,"RED FOUND THE ASSASSIN")
 			else:
 				win_game.rpc(true,"BLUE FOUND THE ASSASSIN")
-	print("id: "+str(MultiplayerManager.peer.get_unique_id()))
-	print(red_found)
-	print(red_total)
-	print(blue_found)
-	print(blue_total)
 	if MultiplayerManager.peer.get_unique_id() == 1:
 		if red_found == red_total:
 			win_game.rpc(true,"RED FOUND ALL CARDS")
@@ -101,7 +103,6 @@ func advance_to_red_turn():
 		$GameUI/InputBlockPanel.visible = false
 	else:
 		$GameUI/InputBlockPanel.visible = true
-		print("hiding... " + str(MultiplayerManager.peer.get_unique_id()))
 	if MultiplayerManager.peer.get_unique_id() == red_spymas:
 		$GameUI/NextTurnButton.visible = true
 
@@ -116,7 +117,6 @@ func advance_to_blue_turn():
 		$GameUI/InputBlockPanel.visible = true
 	else:
 		$GameUI/InputBlockPanel.visible = false
-		print("hiding... " + str(MultiplayerManager.peer.get_unique_id()))
 	if MultiplayerManager.peer.get_unique_id() == blue_spymas:
 		$GameUI/NextTurnButton.visible = true
 
@@ -125,6 +125,10 @@ func _ready():
 	MultiplayerManager.player_removed.connect(player_removed)
 	$HTTPRequest.request_completed.connect(_on_request_completed)
 	$HTTPRequest.request("http://api.ipify.org")
+	var error = FileAccess.get_open_error()
+	if error == 7:
+		$WarningPanel/WarningText.text = "NO WORDLIST FOUND. GAME WILL NOT WORK."
+		$WarningPanel.visible = true
 
 func flash_picked_card_msg(color,text):
 	var tween = get_tree().create_tween()
@@ -171,6 +175,9 @@ func player_removed(id,username):
 
 @rpc("authority","reliable")
 func send_card_data(teams,names,totalred,totalblue):
+	print("sending card data...")
+	print(teams," ",names," ",totalred," ",totalblue)
+	print(card_teams," ",card_names," ",red_total," ",blue_total)
 	card_teams = teams
 	card_names = names
 	red_total = totalred
@@ -182,10 +189,12 @@ func start_game_client():
 	setup_cards()
 
 func start_game_server():
+	print("setting up game as server")
 	setup_game()
 	generate_card_data()
 
 func setup_game():
+	print("setting up...")
 	ongoing_game = true
 	$LobbyUI.visible = false
 	$GameUI.visible = true
@@ -209,6 +218,7 @@ func setup_game():
 		
 		for id in red_fieldops:
 			$GameUI/InfoPanel/Label.text = $GameUI/InfoPanel/Label.text + "\n" + MultiplayerManager.players[id].name + (" (YOU)" if id == MultiplayerManager.peer.get_unique_id() else "")
+	print("setup successful")
 
 func generate_card_data():
 	
@@ -228,9 +238,6 @@ func generate_card_data():
 	
 	set_team(3)
 	
-	#print(card_names)
-	#print(card_teams)
-	
 	
 	red_total = 8
 	blue_total = 8
@@ -238,10 +245,12 @@ func generate_card_data():
 	
 	if red_first_turn:
 		red_total += 1
+		print("trying to send carddata red")
 		send_card_data.rpc(card_teams,card_names,red_total,blue_total)
 		advance_to_red_turn.rpc()
 	else:
 		blue_total += 1
+		print("trying to send carddata blue")
 		send_card_data.rpc(card_teams,card_names,red_total,blue_total)
 		advance_to_blue_turn.rpc()
 	
@@ -283,7 +292,6 @@ func end_game():
 			card_instances[i][v] = null
 			card_teams[i][v] = 0
 			card_names[i][v] = ""
-	print(card_instances)
 	red_found = 0
 	blue_found = 0
 	
@@ -324,8 +332,6 @@ func set_team(team:int):
 		if card_teams[card_index/5][card_index%5] == 0:
 			card_teams[card_index/5][card_index%5] = team
 			break
-		#else:
-			#print("rechosen: "+str(team))
 
 func _on_ip_copy_button_pressed():
 	if not MultiplayerManager.local_ip:
