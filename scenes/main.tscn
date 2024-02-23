@@ -1,12 +1,13 @@
-[gd_scene load_steps=29 format=3 uid="uid://cbiog01nc87le"]
+[gd_scene load_steps=31 format=3 uid="uid://cbiog01nc87le"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_yihur"]
 [ext_resource type="AudioStream" uid="uid://caauooabkydvw" path="res://audio/special_agent.mp3" id="6_sybov"]
-[ext_resource type="Texture2D" uid="uid://b2wylgjic3g2c" path="res://istockphoto-1341348395-612x612.jpg" id="9_4r53c"]
+[ext_resource type="Texture2D" uid="uid://b2wylgjic3g2c" path="res://images/istockphoto-1341348395-612x612.jpg" id="9_4r53c"]
+[ext_resource type="Texture2D" uid="uid://ch2jb1es1kyx6" path="res://images/settings.svg" id="9_fcp2h"]
 [ext_resource type="Script" path="res://scripts/connect_ui.gd" id="10_j3fhv"]
 [ext_resource type="FontFile" uid="uid://bhj0uwpk8q43q" path="res://fonts/beekeepers/StyleB-Regular.ttf" id="11_k2gwo"]
 [ext_resource type="Script" path="res://scripts/lobby_ui.gd" id="12_u8jo2"]
-[ext_resource type="Texture2D" uid="uid://bhjyqw0vqdbwy" path="res://checkbox_unchecked.svg" id="13_iik2n"]
+[ext_resource type="Texture2D" uid="uid://bhjyqw0vqdbwy" path="res://images/checkbox_unchecked.svg" id="13_iik2n"]
 [ext_resource type="Script" path="res://scripts/warning_panel.gd" id="15_ib4qv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_567t2"]
@@ -120,6 +121,13 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okh3m"]
 bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2mswd"]
+bg_color = Color(0.976471, 0.976471, 0.976471, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -875,6 +883,28 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_2k7aq")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ecto5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_okh3m")
 text = "OK"
+
+[node name="SettingsButton" type="Button" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -77.0
+offset_top = 23.0
+offset_right = -27.0
+offset_bottom = 73.0
+grow_horizontal = 0
+rotation = -0.0523599
+pivot_offset = Vector2(25, 25)
+theme_override_styles/normal = SubResource("StyleBoxFlat_2mswd")
+expand_icon = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SettingsButton"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(25, 25)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("9_fcp2h")
 
 [connection signal="hosting" from="ConnectUI" to="LobbyUI" method="_on_hosting"]
 [connection signal="text_changed" from="ConnectUI/InfoPanel/UsernameBox" to="ConnectUI" method="_on_username_box_text_changed"]

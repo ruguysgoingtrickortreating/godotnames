@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bl70a04fqh2f5"
-path="res://.godot/imported/swapteams.svg-139f557f18c9cefbfdc971f83a516bdb.ctex"
+uid="uid://bhjyqw0vqdbwy"
+path="res://.godot/imported/checkbox_unchecked.svg-31862a9c36855c251b36088c0d10e8c1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://swapteams.svg"
-dest_files=["res://.godot/imported/swapteams.svg-139f557f18c9cefbfdc971f83a516bdb.ctex"]
+source_file="res://images/checkbox_unchecked.svg"
+dest_files=["res://.godot/imported/checkbox_unchecked.svg-31862a9c36855c251b36088c0d10e8c1.ctex"]
 
 [params]
 

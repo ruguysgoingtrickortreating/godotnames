@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqlktqoqdpd0q"
-path="res://.godot/imported/sillhouette.svg-5a61ba4e381c8a9c89802f299c16e90d.ctex"
+uid="uid://b2wylgjic3g2c"
+path="res://.godot/imported/istockphoto-1341348395-612x612.jpg-dab85b47bef081d07784f6a873256d86.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sillhouette.svg"
-dest_files=["res://.godot/imported/sillhouette.svg-5a61ba4e381c8a9c89802f299c16e90d.ctex"]
+source_file="res://images/istockphoto-1341348395-612x612.jpg"
+dest_files=["res://.godot/imported/istockphoto-1341348395-612x612.jpg-dab85b47bef081d07784f6a873256d86.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

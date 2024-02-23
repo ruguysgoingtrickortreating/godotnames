@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://bb2r5lb61rbj3"]
 
 [ext_resource type="StyleBox" uid="uid://ch4hobhbpoq54" path="res://resources/red_card_id.tres" id="1_jhdhj"]
-[ext_resource type="Texture2D" uid="uid://bqlktqoqdpd0q" path="res://sillhouette.svg" id="1_swmio"]
+[ext_resource type="Texture2D" uid="uid://bqlktqoqdpd0q" path="res://images/sillhouette.svg" id="1_swmio"]
 [ext_resource type="FontFile" uid="uid://bhj0uwpk8q43q" path="res://fonts/beekeepers/StyleB-Regular.ttf" id="2_1jovc"]
-[ext_resource type="Texture2D" uid="uid://bl70a04fqh2f5" path="res://swapteams.svg" id="4_nmgmk"]
-[ext_resource type="Texture2D" uid="uid://d23iq57bxng8r" path="res://crown.svg" id="5_qlhdo"]
+[ext_resource type="Texture2D" uid="uid://bl70a04fqh2f5" path="res://images/swapteams.svg" id="4_nmgmk"]
+[ext_resource type="Texture2D" uid="uid://d23iq57bxng8r" path="res://images/crown.svg" id="5_qlhdo"]
 [ext_resource type="StyleBox" uid="uid://durn0wpcbklyp" path="res://resources/red_card_id_hover.tres" id="6_j4vm5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_polip"]
