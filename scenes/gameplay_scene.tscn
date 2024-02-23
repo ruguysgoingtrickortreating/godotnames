@@ -1,0 +1,228 @@
+[gd_scene load_steps=13 format=3 uid="uid://oi0usvdl4fuw"]
+
+[ext_resource type="Script" path="res://scripts/game_logic.gd" id="1_35hsm"]
+[ext_resource type="FontFile" uid="uid://bhj0uwpk8q43q" path="res://fonts/beekeepers/StyleB-Regular.ttf" id="1_iy4j8"]
+[ext_resource type="StyleBox" uid="uid://xx1pk5x810mm" path="res://resources/word_card_red_unsolved.tres" id="2_1oigs"]
+[ext_resource type="AudioStream" uid="uid://lef3ly5m5epi" path="res://audio/pistol_ready.mp3" id="2_2j484"]
+[ext_resource type="AudioStream" uid="uid://bhsyfdggpjxlg" path="res://audio/9mm_gunshot.mp3" id="3_wgykh"]
+[ext_resource type="AudioStream" uid="uid://ci516p65med2" path="res://audio/click.mp3" id="4_hoxmm"]
+[ext_resource type="AudioStream" uid="uid://dxih0q0fyom0f" path="res://audio/shotgun_gunshot.mp3" id="5_2hc3e"]
+[ext_resource type="AudioStream" uid="uid://drqa5lf3mcygr" path="res://audio/clock_tick.mp3" id="6_o7yen"]
+[ext_resource type="AudioStream" uid="uid://dmfhem74h3e1l" path="res://audio/alarm.mp3" id="7_pt4qx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etstn"]
+bg_color = Color(1, 0.835294, 0, 1)
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cmqsh"]
+bg_color = Color(1, 0.886275, 0.321569, 1)
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2soq6"]
+bg_color = Color(0.85098, 0.666667, 0, 1)
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+
+[node name="GameplayScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_35hsm")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="TurnAudio" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("2_2j484")
+
+[node name="AnswerAudioWrong" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_wgykh")
+
+[node name="AnswerAudioRight" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_hoxmm")
+
+[node name="AnswerAudioAssassin" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_2hc3e")
+
+[node name="Ticking" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("6_o7yen")
+
+[node name="TimeoutAlarm" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_pt4qx")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 60.0
+
+[node name="TurnLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -297.0
+offset_top = -254.0
+offset_right = 297.0
+offset_bottom = -212.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_fonts/font = ExtResource("1_iy4j8")
+theme_override_font_sizes/font_size = 60
+text = "TEAM'S TURN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 401.0
+offset_top = -254.0
+offset_right = 541.0
+offset_bottom = -212.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_fonts/font = ExtResource("1_iy4j8")
+theme_override_font_sizes/font_size = 30
+vertical_alignment = 1
+
+[node name="WinReasonLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -297.0
+offset_top = -202.0
+offset_right = 297.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(297, 21)
+theme_override_fonts/font = ExtResource("1_iy4j8")
+theme_override_font_sizes/font_size = 30
+text = "TEAM FOUND ALL CARDS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PickedCardLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 25.0
+offset_right = 379.0
+offset_bottom = 150.0
+theme_override_fonts/normal_font = ExtResource("1_iy4j8")
+theme_override_font_sizes/normal_font_size = 23
+bbcode_enabled = true
+scroll_following = true
+
+[node name="InfoPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -561.0
+offset_top = -149.0
+offset_right = -367.0
+offset_bottom = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.00872665
+pivot_offset = Vector2(200, 100)
+theme_override_styles/panel = ExtResource("2_1oigs")
+
+[node name="Label" type="Label" parent="InfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 21.0
+offset_right = -10.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_iy4j8")
+theme_override_font_sizes/font_size = 25
+text = "RED TEAM
+
+SPYMASTER:
+
+BIDEN
+
+FIELD OPS:
+
+TRUMP
+OBAMA
+
+"
+autowrap_mode = 3
+
+[node name="Cards" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 223.5
+offset_top = 175.0
+offset_right = 928.5
+offset_bottom = 610.0
+
+[node name="InputBlockPanel" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.5
+offset_top = -149.0
+offset_right = 352.5
+offset_bottom = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="NextTurnButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 968.0
+offset_top = 560.0
+offset_right = 1122.0
+offset_bottom = 610.0
+focus_mode = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.133333, 0.133333, 0.133333, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_iy4j8")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_etstn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cmqsh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2soq6")
+text = "NEXT TURN "
+alignment = 2
+
+[node name="ColorRect" type="ColorRect" parent="NextTurnButton"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_right = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.678431, 0.462745, 0.0627451, 0.392157)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="NextTurnButton" to="." method="_on_next_turn_button_pressed"]

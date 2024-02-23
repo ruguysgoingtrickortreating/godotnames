@@ -13,6 +13,7 @@ var connected_ip:String
 var connected_port:int
 var gamedata = {}
 var players = {}
+var settings = {}
 
 func create_server(port:int, plr_name:String):
 	local_name = plr_name
@@ -23,6 +24,10 @@ func create_server(port:int, plr_name:String):
 	connected_ip = local_ip
 	connected_port = port
 	_register_new_player(local_name)
+	settings = {
+		timer_enabled = false,
+		time = 60
+}
 	return error
 
 func create_client(ip_addr:String,port:int,plr_name:String):
@@ -54,7 +59,7 @@ func _register_new_player(plr_name):
 	
 	print(players)
 	_send_new_player.rpc(id,players[id])
-	_send_player_list.rpc_id(id,players)
+	_send_player_list.rpc_id(id,players,settings)
 	player_added.emit(id)
 
 func _remove_player(id):
@@ -81,8 +86,9 @@ func _send_new_player(id:int,new_entry:Dictionary):
 	print(str(players))
 	player_added.emit(id)
 
-@rpc("authority","reliable") func _send_player_list(player_list:Dictionary):
+@rpc("authority","reliable") func _send_player_list(player_list:Dictionary,settings_list:Dictionary):
 	players = player_list
+	settings = settings_list
 	print(str(players))
 	connected_to_server.emit()
 

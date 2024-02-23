@@ -8,7 +8,7 @@ var blue_theme_hover = load("res://resources/blue_card_id_hover.tres")
 
 var idcards:Dictionary = {}
 
-@onready var main = get_parent()
+@onready var main:MainNodeClass = get_parent()
 @onready var red_card_box = $PaperBG/RedBG/PlayersContainer/VBox
 @onready var blue_card_box = $PaperBG/BlueBG/PlayersContainer/VBox
 
@@ -26,15 +26,6 @@ func player_added(id):
 func player_removed(id,username):
 	idcards[id].queue_free()
 	idcards.erase(id)
-
-func connected_to_server():
-	#for id in MultiplayerManager.players:
-		#add_to_playerlist(id)
-	request_teamslist.rpc_id(1)
-	$".."/LobbyUI/InfoPanel/HostBox.text = "HOST: "+MultiplayerManager.players[1].name
-	print(MultiplayerManager.peer.get_unique_id())
-	$".."/LobbyUI/InfoPanel/IPBox.text = "IP: "+MultiplayerManager.connected_ip
-	$".."/LobbyUI/InfoPanel/PortBox.text = "PORT: "+str(MultiplayerManager.connected_port)
 
 @rpc("any_peer","reliable")
 func request_teamslist():
@@ -177,7 +168,6 @@ func set_idcard_blue(idcard):
 
 func disconnected(code):
 	self.visible = false
-	$".."/GameUI.visible = false
 	$".."/ConnectUI.visible = true
 	disconnect_with_error("DISCONNECTED: HOST LEFT")
 	for i in idcards:
@@ -185,21 +175,32 @@ func disconnected(code):
 	idcards.clear()
 	$StartButton.visible = false
 	$LeaveButton.position = Vector2(852,472)
+	$GameSettingsPanel/InputBlockPanel.visible = true
 
 func disconnect_with_error(error):
 	$".."/WarningPanel/WarningText.text = error
 	$".."/WarningPanel.visible = true
 	if main.ongoing_game:
+		print(main.ongoing_game)
 		main.end_game()
 
 func _on_hosting():
 	$".."/LobbyUI/InfoPanel/HostBox.text = "HOST: "+MultiplayerManager.players[1].name
-	print(MultiplayerManager.peer.get_unique_id())
 	$".."/LobbyUI/InfoPanel/IPBox.text = "IP: "+MultiplayerManager.connected_ip
 	$".."/LobbyUI/InfoPanel/PortBox.text = "PORT: "+str(MultiplayerManager.connected_port)
 	$StartButton.visible = true
 	$LeaveButton.position = Vector2(730,473)
+	$GameSettingsPanel/InputBlockPanel.visible = false
 
+func connected_to_server():
+	#for id in MultiplayerManager.players:
+		#add_to_playerlist(id)
+	request_teamslist.rpc_id(1)
+	update_timer_state(MultiplayerManager.settings["timer_enabled"])
+	set_timer_time(str(MultiplayerManager.settings["time"]))
+	$InfoPanel/HostBox.text = "HOST: "+MultiplayerManager.players[1].name
+	$InfoPanel/IPBox.text = "IP: "+MultiplayerManager.connected_ip
+	$InfoPanel/PortBox.text = "PORT: "+str(MultiplayerManager.connected_port)
 
 func _on_leave_button_pressed():
 	MultiplayerManager.disconnect_network(0)
@@ -213,4 +214,37 @@ func _on_start_button_pressed():
 		$ErrorText.text = "MISSING SPYMASTERS"
 		return
 	
+	$ErrorText.text = ""
 	main.start_game_server()
+
+var checked_sprite = load("res://checkbox_checked.svg")
+var unchecked_sprite = load("res://checkbox_unchecked.svg")
+
+func _on_timer_checkbox_pressed():
+	if $GameSettingsPanel/TimerCheckbox.button_pressed:
+		update_timer_state.rpc(true)
+	else:
+		update_timer_state.rpc(false)
+
+@rpc("authority","reliable","call_local")
+func update_timer_state(state:bool):
+	if state:
+		$GameSettingsPanel/TimerCheckbox.icon = checked_sprite
+		MultiplayerManager.settings["timer_enabled"] = true
+	else:
+		$GameSettingsPanel/TimerCheckbox.icon = unchecked_sprite
+		MultiplayerManager.settings["timer_enabled"] = false
+
+func _on_time_box_text_changed(new_text):
+	if new_text == "":
+		set_timer_time.rpc("")
+	else:
+		var old_caret_position = $GameSettingsPanel/TimeBox.caret_column
+		var validated_text = main.validate_regex(new_text,"[0-9]")
+		set_timer_time.rpc(validated_text)
+		$GameSettingsPanel/TimeBox.caret_column = old_caret_position
+
+@rpc("authority","reliable","call_local")
+func set_timer_time(new_time:String):
+	MultiplayerManager.settings["time"] = int(new_time)
+	$GameSettingsPanel/TimeBox.text = str(new_time)

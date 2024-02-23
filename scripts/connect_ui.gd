@@ -19,7 +19,8 @@ var port_characters = "[0-9]"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if OS.has_feature("editor"):
+		username_box.text = str(randi())
 
 
 func on_host_pressed():
@@ -61,31 +62,27 @@ func on_join_pressed():
 	$".."/LobbyUI.visible = true
 
 
-
-func validate_chars(text:String,textbox:LineEdit,regex_filter:String):
-	var old_caret_position = textbox.caret_column
-
-	var word = ''
-	var regex = RegEx.new()
-	regex.compile(regex_filter)
-	for valid_character in regex.search_all(text):
-		word += valid_character.get_string()
-	textbox.set_text(word)
-
-	textbox.caret_column = old_caret_position
-
 func _on_username_box_text_changed(new_text:String):
-	validate_chars(new_text,username_box,username_characters)
+	var old_caret_position = username_box.caret_column
+	var validated_text = $"..".validate_regex(new_text,username_characters)
+	username_box.set_text(validated_text)
+	username_box.caret_column = old_caret_position
 
 func _on_ip_box_text_changed(new_text):
-	validate_chars(new_text,ip_box,ip_characters)
+	var old_caret_position = ip_box.caret_column
+	var validated_text = $"..".validate_regex(new_text,ip_characters)
+	ip_box.set_text(validated_text)
+	ip_box.caret_column = old_caret_position
 	if ip_box.text:
 		ip_addr = ip_box.text
 	else:
 		ip_addr = DEFAULT_IP
 
 func _on_port_box_text_changed(new_text):
-	validate_chars(new_text,port_box,port_characters)
+	var old_caret_position = port_box.caret_column
+	var validated_text = $"..".validate_regex(new_text,port_characters)
+	port_box.set_text(validated_text)
+	port_box.caret_column = old_caret_position
 	if port_box.text:
 		port = int(port_box.text)
 	else:
