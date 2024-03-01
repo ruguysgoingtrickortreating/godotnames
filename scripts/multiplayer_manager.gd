@@ -11,9 +11,9 @@ var local_name:String
 var local_ip:String
 var connected_ip:String
 var connected_port:int
-var gamedata = {}
-var players = {}
-var settings = {}
+var gamedata:Dictionary = {}
+var players:Dictionary = {}
+var settings:Dictionary = {}
 
 func create_server(port:int, plr_name:String):
 	local_name = plr_name
@@ -63,7 +63,7 @@ func _register_new_player(plr_name):
 	player_added.emit(id)
 
 func _remove_player(id):
-	if id == 1:
+	if id == 1 and not peer.get_unique_id() == 1:
 		disconnect_network()
 		return
 	player_removed.emit(id, players[id].name)

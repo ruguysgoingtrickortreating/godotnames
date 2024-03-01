@@ -1,7 +1,13 @@
-[gd_scene load_steps=31 format=3 uid="uid://cbiog01nc87le"]
+[gd_scene load_steps=45 format=3 uid="uid://cbiog01nc87le"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_yihur"]
+[ext_resource type="AudioStream" uid="uid://lef3ly5m5epi" path="res://audio/gun_click.mp3" id="2_hs12w"]
+[ext_resource type="AudioStream" uid="uid://bhsyfdggpjxlg" path="res://audio/9mm_gunshot.mp3" id="3_uf500"]
+[ext_resource type="AudioStream" uid="uid://ci516p65med2" path="res://audio/click.mp3" id="4_hlc6p"]
+[ext_resource type="AudioStream" uid="uid://dxih0q0fyom0f" path="res://audio/shotgun_gunshot.mp3" id="5_rf4if"]
+[ext_resource type="AudioStream" uid="uid://drqa5lf3mcygr" path="res://audio/clock_tick.mp3" id="6_mgvhs"]
 [ext_resource type="AudioStream" uid="uid://caauooabkydvw" path="res://audio/special_agent.mp3" id="6_sybov"]
+[ext_resource type="AudioStream" uid="uid://dmfhem74h3e1l" path="res://audio/alarm.mp3" id="7_oicf2"]
 [ext_resource type="Texture2D" uid="uid://b2wylgjic3g2c" path="res://images/istockphoto-1341348395-612x612.jpg" id="9_4r53c"]
 [ext_resource type="Texture2D" uid="uid://ch2jb1es1kyx6" path="res://images/settings.svg" id="9_fcp2h"]
 [ext_resource type="Script" path="res://scripts/connect_ui.gd" id="10_j3fhv"]
@@ -9,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/lobby_ui.gd" id="12_u8jo2"]
 [ext_resource type="Texture2D" uid="uid://bhjyqw0vqdbwy" path="res://images/checkbox_unchecked.svg" id="13_iik2n"]
 [ext_resource type="Script" path="res://scripts/warning_panel.gd" id="15_ib4qv"]
+[ext_resource type="Texture2D" uid="uid://bgjkqo82usaly" path="res://images/checkbox_checked.svg" id="15_js85r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_567t2"]
 bg_color = Color(0.901961, 0.901961, 0.901961, 1)
@@ -113,7 +120,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecto5"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+bg_color = Color(0.247059, 0.247059, 0.247059, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -126,8 +133,56 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="Image" id="Image_mmw7p"]
+data = {
+"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 23, 254, 254, 254, 133, 254, 254, 254, 209, 254, 254, 254, 244, 254, 254, 254, 244, 254, 254, 254, 209, 254, 254, 254, 132, 255, 255, 255, 22, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 87, 254, 254, 254, 244, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 243, 255, 255, 255, 84, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 87, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 255, 255, 255, 84, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 23, 254, 254, 254, 244, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 242, 255, 255, 255, 21, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 133, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 130, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 209, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 207, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 244, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 243, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 244, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 242, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 209, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 206, 255, 255, 255, 0, 255, 255, 255, 0, 254, 254, 254, 132, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 129, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 22, 254, 254, 254, 243, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 241, 255, 255, 255, 20, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 84, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 255, 255, 255, 81, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 84, 254, 254, 254, 242, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 255, 254, 254, 254, 241, 255, 255, 255, 81, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 21, 254, 254, 254, 130, 254, 254, 254, 207, 254, 254, 254, 243, 254, 254, 254, 242, 254, 254, 254, 206, 254, 254, 254, 129, 255, 255, 255, 20, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_maibe"]
+image = SubResource("Image_mmw7p")
+
+[sub_resource type="ImageTexture" id="ImageTexture_saa15"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l8s1n"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.54902, 0.54902, 0.54902, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_srxwg"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 6
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2mswd"]
 bg_color = Color(0.976471, 0.976471, 0.976471, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwyim"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n1hba"]
+bg_color = Color(0.145098, 0.145098, 0.145098, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -142,12 +197,43 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yihur")
 
-[node name="Music1" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="TurnAudio" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("2_hs12w")
+max_polyphony = 5
+bus = &"SFX"
+
+[node name="AnswerAudioWrong" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_uf500")
+max_polyphony = 5
+bus = &"SFX"
+
+[node name="AnswerAudioRight" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_hlc6p")
+max_polyphony = 5
+bus = &"SFX"
+
+[node name="AnswerAudioAssassin" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_rf4if")
+max_polyphony = 5
+bus = &"SFX"
+
+[node name="Ticking" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("6_mgvhs")
+max_polyphony = 5
+bus = &"SFX"
+
+[node name="TimeoutAlarm" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_oicf2")
+max_polyphony = 5
+bus = &"SFX"
+
+[node name="Music" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("6_sybov")
 autoplay = true
-
-[node name="Music2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_sybov")
+max_polyphony = 2
+bus = &"Music"
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.733333, 0.627451, 0.603922, 1)
@@ -571,7 +657,7 @@ rotation = 0.0261799
 pivot_offset = Vector2(200, 100)
 theme_override_styles/panel = SubResource("StyleBoxFlat_567t2")
 
-[node name="HostBox" type="LineEdit" parent="LobbyUI/InfoPanel"]
+[node name="HostBox" type="Button" parent="LobbyUI/InfoPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -585,15 +671,14 @@ offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.666667, 1)
+mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_k2gwo")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
 text = "HOST:"
-max_length = 16
-caret_blink = true
+alignment = 0
 
-[node name="IPBox" type="LineEdit" parent="LobbyUI/InfoPanel"]
+[node name="IPBox" type="Button" parent="LobbyUI/InfoPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -607,14 +692,17 @@ offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_colors/font_pressed_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("11_k2gwo")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jps4q")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jps4q")
 text = "IP: "
-caret_blink = true
+alignment = 0
 
-[node name="PortBox" type="LineEdit" parent="LobbyUI/InfoPanel"]
+[node name="PortBox" type="Button" parent="LobbyUI/InfoPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -628,13 +716,12 @@ offset_bottom = 82.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_colors/font_placeholder_color = Color(0.666667, 0.666667, 0.666667, 1)
+mouse_filter = 2
 theme_override_fonts/font = ExtResource("11_k2gwo")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
 text = "PORT:"
-placeholder_text = "1962"
-caret_blink = true
+alignment = 0
 
 [node name="CardText" type="Label" parent="LobbyUI/InfoPanel"]
 layout_mode = 1
@@ -758,6 +845,24 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
+[node name="RandomizeTeamsButton" type="Button" parent="LobbyUI/GameSettingsPanel"]
+visible = false
+layout_mode = 1
+offset_left = 210.0
+offset_top = 20.0
+offset_right = 375.0
+offset_bottom = 44.0
+focus_mode = 0
+theme_override_colors/font_pressed_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("11_k2gwo")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_jps4q")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jps4q")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jps4q")
+text = "RANDOMIZE TEAMS"
+alignment = 0
+
 [node name="StartButton" type="Button" parent="LobbyUI"]
 visible = false
 layout_mode = 1
@@ -826,18 +931,20 @@ theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WarningPanel" type="Panel" parent="."]
+[node name="DrawOnTop" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="WarningPanel" type="Panel" parent="DrawOnTop"]
 visible = false
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -100.0
-offset_right = 200.0
-offset_bottom = 100.0
+offset_left = -200.865
+offset_top = -98.2509
+offset_right = 199.135
+offset_bottom = 101.749
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.00872665
@@ -845,7 +952,7 @@ pivot_offset = Vector2(200, 100)
 theme_override_styles/panel = SubResource("StyleBoxFlat_apo5j")
 script = ExtResource("15_ib4qv")
 
-[node name="WarningText" type="Label" parent="WarningPanel"]
+[node name="WarningText" type="Label" parent="DrawOnTop/WarningPanel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -863,7 +970,7 @@ theme_override_font_sizes/font_size = 35
 text = "WARNING MESSAGE BOX"
 autowrap_mode = 3
 
-[node name="OKButton" type="Button" parent="WarningPanel"]
+[node name="OKButton" type="Button" parent="DrawOnTop/WarningPanel"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -884,27 +991,209 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ecto5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_okh3m")
 text = "OK"
 
-[node name="SettingsButton" type="Button" parent="."]
-custom_minimum_size = Vector2(50, 50)
+[node name="SettingsPanel" type="Panel" parent="DrawOnTop"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -129.0
+offset_right = 200.0
+offset_bottom = 109.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(200, 100)
+theme_override_styles/panel = SubResource("StyleBoxFlat_apo5j")
+script = ExtResource("15_ib4qv")
+
+[node name="CardText" type="Label" parent="DrawOnTop/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 23.0
+offset_right = 174.0
+offset_bottom = 45.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.482353, 0.482353, 0.482353, 1)
+theme_override_fonts/font = ExtResource("11_k2gwo")
+theme_override_font_sizes/font_size = 24
+text = "GAME SETTINGS"
+vertical_alignment = 1
+
+[node name="OKButton" type="Button" parent="DrawOnTop/SettingsPanel"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -77.0
-offset_top = 23.0
-offset_right = -27.0
-offset_bottom = 73.0
+offset_left = -50.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 50.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_colors/font_pressed_color = Color(0.666667, 0.666667, 0.666667, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("11_k2gwo")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_2k7aq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ecto5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_okh3m")
+text = "✕"
+
+[node name="GameVolText" type="Label" parent="DrawOnTop/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -175.0
+offset_top = 60.0
+offset_right = 179.0
+offset_bottom = 82.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.145098, 0.145098, 0.145098, 1)
+theme_override_fonts/font = ExtResource("11_k2gwo")
+theme_override_font_sizes/font_size = 20
+text = "GAME VOLUME"
+vertical_alignment = 1
+
+[node name="GameVolSlider" type="HSlider" parent="DrawOnTop/SettingsPanel"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 72.0
+offset_right = 375.0
+offset_bottom = 104.0
+theme_override_icons/grabber = SubResource("ImageTexture_maibe")
+theme_override_icons/tick = SubResource("ImageTexture_saa15")
+theme_override_styles/slider = SubResource("StyleBoxFlat_l8s1n")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_srxwg")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_srxwg")
+value = 100.0
+tick_count = 100
+ticks_on_borders = true
+
+[node name="GameVolText2" type="Label" parent="DrawOnTop/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -175.0
+offset_top = 109.0
+offset_right = 179.0
+offset_bottom = 131.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.145098, 0.145098, 0.145098, 1)
+theme_override_fonts/font = ExtResource("11_k2gwo")
+theme_override_font_sizes/font_size = 20
+text = "MUSIC VOLUME"
+vertical_alignment = 1
+
+[node name="MusicVolSlider" type="HSlider" parent="DrawOnTop/SettingsPanel"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 120.0
+offset_right = 375.0
+offset_bottom = 152.0
+theme_override_icons/grabber = SubResource("ImageTexture_maibe")
+theme_override_icons/tick = SubResource("ImageTexture_saa15")
+theme_override_styles/slider = SubResource("StyleBoxFlat_l8s1n")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_srxwg")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_srxwg")
+value = 100.0
+tick_count = 100
+ticks_on_borders = true
+
+[node name="MusicDuringGamesText" type="Label" parent="DrawOnTop/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -175.0
+offset_top = 161.0
+offset_right = 179.0
+offset_bottom = 183.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.145098, 0.145098, 0.145098, 1)
+theme_override_fonts/font = ExtResource("11_k2gwo")
+theme_override_font_sizes/font_size = 20
+text = "MUSIC DURING GAMES:"
+vertical_alignment = 1
+
+[node name="MusicDuringGamesCheckbox" type="Button" parent="DrawOnTop/SettingsPanel"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 157.0
+offset_right = 272.0
+offset_bottom = 181.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fe31h")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q7nlw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hcaic")
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("15_js85r")
+expand_icon = true
+
+[node name="HideFoundCardsText" type="Label" parent="DrawOnTop/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -175.0
+offset_top = 196.0
+offset_right = 179.0
+offset_bottom = 218.0
+grow_horizontal = 2
+pivot_offset = Vector2(297, 21)
+theme_override_colors/font_color = Color(0.145098, 0.145098, 0.145098, 1)
+theme_override_fonts/font = ExtResource("11_k2gwo")
+theme_override_font_sizes/font_size = 20
+text = "HIDE  FOUND  CARDS:"
+vertical_alignment = 1
+
+[node name="HideFoundCardsCheckbox" type="Button" parent="DrawOnTop/SettingsPanel"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 192.0
+offset_right = 272.0
+offset_bottom = 216.0
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fe31h")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q7nlw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hcaic")
+toggle_mode = true
+icon = ExtResource("13_iik2n")
+expand_icon = true
+
+[node name="SettingsButton" type="Button" parent="DrawOnTop"]
+custom_minimum_size = Vector2(50, 50)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -78.2742
+offset_top = 24.3427
+offset_right = -28.2742
+offset_bottom = 74.3427
 grow_horizontal = 0
 rotation = -0.0523599
 pivot_offset = Vector2(25, 25)
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_constants/icon_max_width = 40
 theme_override_styles/normal = SubResource("StyleBoxFlat_2mswd")
+theme_override_styles/hover = SubResource("StyleBoxFlat_iwyim")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n1hba")
+icon = ExtResource("9_fcp2h")
+icon_alignment = 1
 expand_icon = true
-
-[node name="Sprite2D" type="Sprite2D" parent="SettingsButton"]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(25, 25)
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("9_fcp2h")
 
 [connection signal="hosting" from="ConnectUI" to="LobbyUI" method="_on_hosting"]
 [connection signal="text_changed" from="ConnectUI/InfoPanel/UsernameBox" to="ConnectUI" method="_on_username_box_text_changed"]
@@ -913,8 +1202,16 @@ texture = ExtResource("9_fcp2h")
 [connection signal="pressed" from="ConnectUI/HostButton" to="ConnectUI" method="on_host_pressed"]
 [connection signal="pressed" from="ConnectUI/JoinButton" to="ConnectUI" method="on_join_pressed"]
 [connection signal="pressed" from="ConnectUI/IpCopyButton" to="." method="_on_ip_copy_button_pressed"]
+[connection signal="pressed" from="LobbyUI/InfoPanel/IPBox" to="LobbyUI" method="_on_ip_box_pressed"]
 [connection signal="pressed" from="LobbyUI/GameSettingsPanel/TimerCheckbox" to="LobbyUI" method="_on_timer_checkbox_pressed"]
 [connection signal="text_changed" from="LobbyUI/GameSettingsPanel/TimeBox" to="LobbyUI" method="_on_time_box_text_changed"]
+[connection signal="pressed" from="LobbyUI/GameSettingsPanel/RandomizeTeamsButton" to="LobbyUI" method="_on_randomize_teams_button_pressed"]
 [connection signal="pressed" from="LobbyUI/StartButton" to="LobbyUI" method="_on_start_button_pressed"]
 [connection signal="pressed" from="LobbyUI/LeaveButton" to="LobbyUI" method="_on_leave_button_pressed"]
-[connection signal="pressed" from="WarningPanel/OKButton" to="WarningPanel" method="_on_ok_button_pressed"]
+[connection signal="pressed" from="DrawOnTop/WarningPanel/OKButton" to="DrawOnTop/WarningPanel" method="_on_ok_button_pressed"]
+[connection signal="pressed" from="DrawOnTop/SettingsPanel/OKButton" to="DrawOnTop/SettingsPanel" method="_on_ok_button_pressed"]
+[connection signal="drag_ended" from="DrawOnTop/SettingsPanel/GameVolSlider" to="." method="_on_game_vol_slider_drag_ended"]
+[connection signal="drag_ended" from="DrawOnTop/SettingsPanel/MusicVolSlider" to="." method="_on_music_vol_slider_drag_ended"]
+[connection signal="pressed" from="DrawOnTop/SettingsPanel/MusicDuringGamesCheckbox" to="." method="_on_music_during_games_checkbox_pressed"]
+[connection signal="pressed" from="DrawOnTop/SettingsPanel/HideFoundCardsCheckbox" to="." method="_on_hide_found_cards_checkbox_pressed"]
+[connection signal="pressed" from="DrawOnTop/SettingsButton" to="." method="_on_settings_button_pressed"]

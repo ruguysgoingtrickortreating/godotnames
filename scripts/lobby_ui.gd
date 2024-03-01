@@ -37,7 +37,7 @@ func set_teamslist(red_team,red_spymas,blue_team,blue_spymas):
 	main.red_spymas = red_spymas
 	main.blue_team = blue_team
 	main.blue_spymas = blue_spymas
-	check_spymasters()
+	refresh_fieldops_array()
 	regenerate_cards()
 
 @rpc("authority","reliable","call_local")
@@ -49,25 +49,25 @@ func switch_team(id):
 			main.blue_spymas = null
 		main.blue_team.remove_at(index)
 		main.red_team.append(id)
-		check_spymasters()
+		refresh_fieldops_array()
 	else:
 		if main.red_spymas == id:
 			main.red_spymas = null
 		main.red_team.remove_at(index)
 		main.blue_team.append(id)
-		check_spymasters()
+		refresh_fieldops_array()
 	regenerate_cards()
 
 @rpc("authority","reliable","call_local")
 func make_spymas(id):
 	if main.red_spymas == id:
 		main.red_spymas = null
-		check_spymasters()
+		refresh_fieldops_array()
 		regenerate_cards()
 		return
 	if main.blue_spymas == id:
 		main.blue_spymas = null
-		check_spymasters()
+		refresh_fieldops_array()
 		regenerate_cards()
 		return
 	
@@ -78,10 +78,10 @@ func make_spymas(id):
 	else:
 		main.red_spymas = id
 	
-	check_spymasters()
+	refresh_fieldops_array()
 	regenerate_cards()
 
-func check_spymasters():
+func refresh_fieldops_array():
 	main.blue_fieldops.clear()
 	main.red_fieldops.clear()
 	for i in main.blue_team:
@@ -174,12 +174,13 @@ func disconnected(code):
 		idcards[i].queue_free()
 	idcards.clear()
 	$StartButton.visible = false
+	$GameSettingsPanel/RandomizeTeamsButton.visible = false
 	$LeaveButton.position = Vector2(852,472)
 	$GameSettingsPanel/InputBlockPanel.visible = true
 
 func disconnect_with_error(error):
-	$".."/WarningPanel/WarningText.text = error
-	$".."/WarningPanel.visible = true
+	$".."/DrawOnTop/WarningPanel/WarningText.text = error
+	$".."/DrawOnTop/WarningPanel.visible = true
 	if main.ongoing_game:
 		print(main.ongoing_game)
 		main.end_game()
@@ -191,6 +192,7 @@ func _on_hosting():
 	$StartButton.visible = true
 	$LeaveButton.position = Vector2(730,473)
 	$GameSettingsPanel/InputBlockPanel.visible = false
+	$GameSettingsPanel/RandomizeTeamsButton.visible = true
 
 func connected_to_server():
 	#for id in MultiplayerManager.players:
@@ -217,8 +219,8 @@ func _on_start_button_pressed():
 	$ErrorText.text = ""
 	main.start_game_server()
 
-var checked_sprite = load("res://checkbox_checked.svg")
-var unchecked_sprite = load("res://checkbox_unchecked.svg")
+var checked_sprite = load("res://images/checkbox_checked.svg")
+var unchecked_sprite = load("res://images/checkbox_unchecked.svg")
 
 func _on_timer_checkbox_pressed():
 	if $GameSettingsPanel/TimerCheckbox.button_pressed:
@@ -248,3 +250,47 @@ func _on_time_box_text_changed(new_text):
 func set_timer_time(new_time:String):
 	MultiplayerManager.settings["time"] = int(new_time)
 	$GameSettingsPanel/TimeBox.text = str(new_time)
+
+
+func _on_ip_box_pressed():
+	DisplayServer.clipboard_set(MultiplayerManager.connected_ip)
+
+@rpc("authority","reliable")
+func server_request_clients_to_request_game_info(): # i love descriptive naming
+	request_teamslist.rpc_id(1)
+
+func _on_randomize_teams_button_pressed():
+	randomize() # this resets the global randomization seed
+	main.red_spymas = null
+	main.blue_spymas = null
+	main.red_team.clear()
+	main.blue_team.clear()
+	
+	var players = MultiplayerManager.players.duplicate()
+	var player_keys_random = players.keys()
+	player_keys_random.shuffle()
+	var red_slots = players.size()/2
+	var blue_slots = players.size()/2
+	if players.size()%2:		# randomly add an extra slot when uneven players (otherwise a player will go unaccounted for)
+		if randi_range(0,1):
+			red_slots += 1
+		else:
+			blue_slots += 1
+	
+	for id in player_keys_random:
+		if (randi_range(0,1) or blue_slots == 0) and not red_slots == 0:
+			if not main.red_spymas:
+				main.red_spymas = id
+			main.red_team.append(id)
+			red_slots -= 1
+		else:
+			if not main.blue_spymas:
+				main.blue_spymas = id
+			main.blue_team.append(id)
+			blue_slots -= 1
+	refresh_fieldops_array()
+	regenerate_cards()
+	server_request_clients_to_request_game_info.rpc()
+	print(main.blue_spymas)
+	print(main.red_spymas)
+	print(main.blue_spymas,main.red_spymas,main.blue_team,main.red_team)

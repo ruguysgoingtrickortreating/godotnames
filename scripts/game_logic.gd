@@ -3,10 +3,6 @@ extends Control
 @onready var main:MainNodeClass = get_parent() #mainnodeclass is for autofill, see main.gd
 var card_scene:PackedScene = load("res://scenes/card.tscn")
 
-var card_teams
-var card_names
-var card_instances
-
 var default_theme = load("res://resources/word_card_default.tres")
 var red_theme = load("res://resources/word_card_red.tres")
 var blue_theme = load("res://resources/word_card_blue.tres")
@@ -20,6 +16,7 @@ var red_total = 8
 var red_found = 0
 var blue_total = 8
 var blue_found = 0
+var cards:Array
 
 var red_turn = true
 var time
@@ -40,7 +37,7 @@ func advance_to_red_turn():
 		$Timer.start(time)
 	if self_red:
 		$InputBlockPanel.visible = false
-		$Audio/TurnAudio.play()
+		main.get_node("Audio/TurnAudio").play()
 		if MultiplayerManager.peer.get_unique_id() == main.red_spymas:
 			$NextTurnButton.visible = true
 	else:
@@ -57,15 +54,13 @@ func advance_to_blue_turn():
 		$Timer.start(time)
 	if not self_red:
 		$InputBlockPanel.visible = false
-		$Audio/TurnAudio.play()
+		main.get_node("Audio/TurnAudio").play()
 		if MultiplayerManager.peer.get_unique_id() == main.blue_spymas:
 			$NextTurnButton.visible = true
 	else:
 		$InputBlockPanel.visible = true
 
 func _on_next_turn_button_pressed():
-	if win_screen:
-		main.end_game.rpc()
 	if MultiplayerManager.peer.get_unique_id() == 1:	# bandaid solution to fix trying to rpc when you are host
 		if main.red_spymas == 1:
 			advance_to_blue_turn.rpc()
@@ -73,6 +68,16 @@ func _on_next_turn_button_pressed():
 			advance_to_red_turn.rpc()
 	else: 
 		check_next_turn_button.rpc_id(1)				# in a perfect world this function would be the only thing needed
+
+var sure
+func _on_end_game_button_pressed():
+	if sure:
+		main.end_game.rpc()
+	sure = true
+	$EndGameButton.text = "ARE YOU\nSURE?"
+	await get_tree().create_timer(3).timeout
+	sure = false
+	$EndGameButton.text = "END GAME"
 
 @rpc("any_peer","reliable")
 func check_next_turn_button():
@@ -86,11 +91,14 @@ func check_next_turn_button():
 
 func _ready():
 	setup_game()
+	if MultiplayerManager.peer.get_unique_id() == 1:
+		$NextTurnButton.position.y = 450
+		$EndGameButton.visible = true
 
 func _process(delta):
 	$TimerLabel.text = str(floor($Timer.time_left))
 	if floor($Timer.time_left) == 5:
-		$Audio/Ticking.play()
+		main.get_node("Audio/Ticking").play()
 
 func setup_game():
 	print("setting up...")
@@ -103,6 +111,7 @@ func setup_game():
 		self_red = false
 		$InfoPanel.set("theme_override_styles/panel",blue_theme_unsolved)
 		
+		print(MultiplayerManager.players[1])
 		$InfoPanel/Label.text = "BLUE TEAM\n\nSPYMASTER:\n\n"\
 		+MultiplayerManager.players[main.blue_spymas].name+ (" (YOU)" if main.blue_spymas == MultiplayerManager.peer.get_unique_id() else "")\
 		+"\n\nFIELD OPS:\n"
@@ -114,8 +123,9 @@ func setup_game():
 		$InfoPanel.set("theme_override_styles/panel",red_theme_unsolved)
 		
 		$InfoPanel/Label.text = "RED TEAM\n\nSPYMASTER:\n\n"\
-		+MultiplayerManager.players[main.red_spymas].name+ (" (YOU)" if main.red_spymas == MultiplayerManager.peer.get_unique_id() else "")\
+		+MultiplayerManager.players[main.red_spymas].name\
 		+"\n\nFIELD OPS:\n"
+		#+ (" (YOU)" if main.red_spymas == MultiplayerManager.peer.get_unique_id() else "")\
 		
 		for id in main.red_fieldops:
 			$InfoPanel/Label.text = $InfoPanel/Label.text + "\n" + MultiplayerManager.players[id].name + (" (YOU)" if id == MultiplayerManager.peer.get_unique_id() else "")
@@ -126,12 +136,12 @@ func setup_game():
 func _on_timer_timeout():
 		if red_turn:
 			if self_red:
-				$Audio/TimeoutAlarm.play()
+				main.get_node("Audio/TimeoutAlarm").play()
 			if MultiplayerManager.peer.get_unique_id() == 1:
 				advance_to_blue_turn.rpc()
 		else:
 			if not self_red:
-				$Audio/TimeoutAlarm.play()
+				main.get_node("Audio/TimeoutAlarm").play()
 			if MultiplayerManager.peer.get_unique_id() == 1:
 				advance_to_red_turn.rpc()
 
@@ -166,11 +176,11 @@ func setup_cards():
 			var card_node:Button = card_scene.instantiate()
 			card_node.name = str(i*5+v)
 			card_node.position = Vector2(v*145,i*90)
-			card_node.text = card_names[i][v]
+			card_node.text = cards[i][v]["text"]
 			card_node.rotation_degrees = randf_range(-2,2)
 			if MultiplayerManager.peer.get_unique_id() == main.red_spymas or MultiplayerManager.peer.get_unique_id() == main.blue_spymas:
 				card_node.disabled = true
-				match card_teams[i][v]:
+				match cards[i][v]["team"]:
 					0:
 						card_node.set("theme_override_styles/disabled",default_theme)
 					1:
@@ -183,7 +193,7 @@ func setup_cards():
 			else:
 				card_node.pressed.connect(card_pressed.bind(i*5+v))
 			
-			card_instances[i][v] = card_node
+			cards[i][v]["node"] = card_node
 			$Cards.add_child(card_node)
 
 func card_pressed(index):
@@ -192,9 +202,7 @@ func card_pressed(index):
 @rpc("any_peer","reliable","call_local")
 func check_card(index:int):
 	var red
-	var card:Button = card_instances[index/5][index%5]
-	var cardteam:int = card_teams[index/5][index%5]
-	var cardtext:String = card_names[index/5][index%5]
+	var card:Dictionary = cards[index/5][index%5]
 	var id = multiplayer.get_remote_sender_id()
 	var username = MultiplayerManager.players[id].name
 	
@@ -207,12 +215,15 @@ func check_card(index:int):
 	$PickedCardLabel.append_text("\n"+username)
 	$PickedCardLabel.pop()
 	$PickedCardLabel.append_text(" PICKED \"")
-	card.disabled = true
-	match cardteam:
+	card["node"].disabled = true
+	card["found"] = true
+	if main.settings["hide_found_cards"]:
+		card["node"].text = ""
+	match card["team"]:
 		0:
-			card.set("theme_override_styles/disabled",civillian_theme)
+			card["node"].set("theme_override_styles/disabled",civillian_theme)
 			$PickedCardLabel.push_color(Color(1,0.8,0.55))
-			$Audio/AnswerAudioWrong.play()
+			main.get_node("Audio/AnswerAudioWrong").play()
 			if MultiplayerManager.peer.get_unique_id() == 1:
 				if red:
 					advance_to_blue_turn.rpc()
@@ -220,41 +231,41 @@ func check_card(index:int):
 					advance_to_red_turn.rpc()
 		1:
 			red_found += 1
-			card.set("theme_override_styles/disabled",red_theme)
-			card.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
+			card["node"].set("theme_override_styles/disabled",red_theme)
+			card["node"].set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
 			$PickedCardLabel.push_color(Color(1,0.5,0.5))
 			if not red:
 				if MultiplayerManager.peer.get_unique_id() == 1:
 					advance_to_red_turn.rpc()
-				$Audio/AnswerAudioWrong.play()
+				main.get_node("Audio/AnswerAudioWrong").play()
 			else:
-				$Audio/AnswerAudioRight.play()
+				main.get_node("Audio/AnswerAudioRight").play()
 			#card_node.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
 		2:
 			blue_found += 1
-			card.set("theme_override_styles/disabled",blue_theme)
-			card.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
+			card["node"].set("theme_override_styles/disabled",blue_theme)
+			card["node"].set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
 			$PickedCardLabel.push_color(Color(0.4,0.5,1))
 			if red:
 				if MultiplayerManager.peer.get_unique_id() == 1:
 					advance_to_blue_turn.rpc()
-				$Audio/AnswerAudioWrong.play()
+				main.get_node("Audio/AnswerAudioWrong").play()
 			else:
-				$Audio/AnswerAudioRight.play()
+				main.get_node("Audio/AnswerAudioRight").play()
 			#card_node.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
 		3:
-			card.set("theme_override_styles/disabled",assassin_theme)
-			card.set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
+			card["node"].set("theme_override_styles/disabled",assassin_theme)
+			card["node"].set("theme_override_colors/font_disabled_color",Color(1,1,1,1))
 			$PickedCardLabel.push_color(Color(0,0,0))
 			$PickedCardLabel.push_outline_color(Color(1,1,1))
 			$PickedCardLabel.push_outline_size(5)
-			$Audio/AnswerAudioAssassin.play()
+			main.get_node("Audio/AnswerAudioAssassin").play()
 			if MultiplayerManager.peer.get_unique_id() == 1:
 				if red:
 					win_game.rpc(false,"RED FOUND THE ASSASSIN")
 				else:
 					win_game.rpc(true,"BLUE FOUND THE ASSASSIN")
-	$PickedCardLabel.append_text(cardtext)
+	$PickedCardLabel.append_text(card["text"])
 	$PickedCardLabel.pop_all()
 	$PickedCardLabel.append_text("\"")
 	if MultiplayerManager.peer.get_unique_id() == 1:
@@ -262,3 +273,5 @@ func check_card(index:int):
 			win_game.rpc(true,"RED FOUND ALL CARDS")
 		if blue_found == blue_total:
 			win_game.rpc(false,"BLUE FOUND ALL CARDS")
+
+

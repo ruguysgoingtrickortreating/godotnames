@@ -13,10 +13,11 @@ var blue_fieldops = []
 var red_spymas
 var blue_spymas
 
-#var timer_enabled
-#var time = 60
-
 var ongoing_game
+var settings = {
+	music_during_games = true,
+	hide_found_cards = false
+}
 
 func _init():
 	names_file = FileAccess.open("res://wordlist.txt", FileAccess.READ)
@@ -29,94 +30,95 @@ func _ready():
 	$HTTPRequest.request("http://api.ipify.org")
 	var error = FileAccess.get_open_error()
 	if error == 7:
-		$WarningPanel/WarningText.text = "NO WORDLIST FOUND. GAME WILL NOT WORK."
-		$WarningPanel.visible = true
+		$DrawOnTop/WarningPanel/WarningText.text = "NO WORDLIST FOUND. HOSTING WILL RESULT IN CARDS THAT SAY <NULL>."
+		$DrawOnTop/WarningPanel.visible = true
 
 func _on_request_completed(result, response_code, headers, body):
 	update_ip(body.get_string_from_utf8())
 
 func _process(delta):
-	if not $Music2.playing and $Music1.get_playback_position() >= 66.66:
-		$Music2.play(2.66)
-	if not $Music1.playing and $Music2.get_playback_position() >= 66.66:
-		$Music1.play(2.66)
-
-func assemble_matrix():
-	var matrix = []
-	for x in 5:
-		matrix.append([])
-		for y in 5:
-			matrix[x].append(0)
-	return matrix
+	if $Audio/Music.get_playback_position() >= 66.66:
+		$Audio/Music.play(2.66)
 
 func start_game_server(): #sets up team count, word list, and initiates GameplayScene.tscn
 	ongoing_game = game_scene.instantiate()
 	var current_names = names_list
 	var red_first_turn = randi_range(0,1) == 0 #remember that comparison statements either return true or false
-	var names = []
-	var teams = []
+	var cards = []
 	var red_count:int
 	var blue_count:int
 	
 	for i in 5:
-		names.append([])
+		cards.append([])
 		for v in 5:
 			var name_index = randi_range(0,current_names.size()-1)
-			names[i].append(current_names[name_index])
+			cards[i].append\
+			({
+				text = current_names[name_index],
+				team = 0,
+				node = null,
+				found = false
+			})
 			current_names.remove_at(name_index)
 	
-	for x in 5:
-		teams.append([])
-		for y in 5:
-			teams[x].append(0)
-	
 	for i in 8: # 0:Civillian, 1:Red, 2:Blue, 3:Assassin
-		find_unteamed_card_add_team(1,teams)
-		find_unteamed_card_add_team(2,teams)
+		find_unteamed_card_add_team(1,cards)
+		find_unteamed_card_add_team(2,cards)
 	red_count = 8
 	blue_count = 8
 	
 	if red_first_turn:
-		find_unteamed_card_add_team(1,teams)
+		find_unteamed_card_add_team(1,cards)
 		red_count += 1
 	else:
-		find_unteamed_card_add_team(2,teams)
+		find_unteamed_card_add_team(2,cards)
 		blue_count += 1
 	
-	find_unteamed_card_add_team(3,teams)
+	find_unteamed_card_add_team(3,cards)
 	
-	ongoing_game.card_names = names
-	ongoing_game.card_teams = teams
+	ongoing_game.cards = cards
 	ongoing_game.red_total = red_count
 	ongoing_game.blue_total = blue_count
-	ongoing_game.card_instances = assemble_matrix()
 	
 	$LobbyUI.visible = false
+	if settings["music_during_games"] == false:
+		var tween = get_tree().create_tween()
+		tween.tween_property($Audio/Music,"volume_db",-60,2).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
+		var awaiter = func():
+			await tween.finished
+			AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"),true)
+		awaiter.call()
+	
 	add_child(ongoing_game)
 	if red_first_turn:
 		ongoing_game.advance_to_red_turn()
 	else:
 		ongoing_game.advance_to_red_turn()
-	send_card_data.rpc(teams,names,red_count,blue_count,red_first_turn)
+	send_card_data.rpc(cards,red_count,blue_count,red_first_turn)
 
 func find_unteamed_card_add_team(team:int,matrix:Array):
 	while true:
 		var card_index = randi_range(1,24)
-		if matrix[card_index/5][card_index%5] == 0:
-			matrix[card_index/5][card_index%5] = team
+		if matrix[card_index/5][card_index%5]["team"] == 0:
+			matrix[card_index/5][card_index%5]["team"] = team
 			break
 
 @rpc("authority","reliable")
-func send_card_data(teams,names,totalred,totalblue,red_starts:bool):
+func send_card_data(cards,totalred,totalblue,red_starts:bool):
 	ongoing_game = game_scene.instantiate()
 	
-	ongoing_game.card_names = names
-	ongoing_game.card_teams = teams
+	ongoing_game.cards = cards
 	ongoing_game.red_total = totalred
 	ongoing_game.blue_total = totalblue
-	ongoing_game.card_instances = assemble_matrix()
 	
 	$LobbyUI.visible = false
+	if settings["music_during_games"] == false:
+		var tween = get_tree().create_tween()
+		tween.tween_property($Audio/Music,"volume_db",-60,2).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN)
+		var awaiter = func():
+			await tween.finished
+			AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"),true)
+		awaiter.call()
 	add_child(ongoing_game)
 	if red_starts:
 		ongoing_game.advance_to_red_turn()
@@ -162,11 +164,14 @@ func end_game():
 	ongoing_game.queue_free()
 	ongoing_game = null
 	$LobbyUI.visible = true
+	var tween = get_tree().create_tween()
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"),false)
+	tween.tween_property($Audio/Music,"volume_db",0,2).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
 
 func early_end_throw_error(error:String):
 	end_game()
-	$WarningPanel/WarningText.text = error
-	$WarningPanel.visible = true
+	$DrawOnTop/WarningPanel/WarningText.text = error
+	$DrawOnTop/WarningPanel.visible = true
 
 func _on_ip_copy_button_pressed():
 	if not MultiplayerManager.local_ip:
@@ -180,3 +185,57 @@ func validate_regex(text:String,regex_filter:String):
 	for valid_character in regex.search_all(text):
 		word += valid_character.get_string()
 	return word
+
+
+func _on_settings_button_pressed():
+	$DrawOnTop/SettingsPanel.visible = not $DrawOnTop/SettingsPanel.visible
+
+func _on_game_vol_slider_drag_ended(value_changed):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"),($DrawOnTop/SettingsPanel/GameVolSlider.value-100)*0.6)
+	if $DrawOnTop/SettingsPanel/GameVolSlider.value < 1:
+		AudioServer.set_bus_mute(AudioServer.get_bus_index("SFX"),true)
+	else:
+		AudioServer.set_bus_mute(AudioServer.get_bus_index("SFX"),false)
+	$Audio/AnswerAudioAssassin.play()
+
+func _on_music_vol_slider_drag_ended(value_changed):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),($DrawOnTop/SettingsPanel/MusicVolSlider.value-100)*0.6)
+	if $DrawOnTop/SettingsPanel/MusicVolSlider.value < 1:
+		AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"),true)
+	else:
+		AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"),false)
+
+var checked_sprite = load("res://images/checkbox_checked.svg")
+var unchecked_sprite = load("res://images/checkbox_unchecked.svg")
+
+func _on_music_during_games_checkbox_pressed():
+	if $DrawOnTop/SettingsPanel/MusicDuringGamesCheckbox.button_pressed:
+		$DrawOnTop/SettingsPanel/MusicDuringGamesCheckbox.icon = checked_sprite
+		settings["music_during_games"] = true
+		if ongoing_game:
+			AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"),false)
+	else:
+		$DrawOnTop/SettingsPanel/MusicDuringGamesCheckbox.icon = unchecked_sprite
+		settings["music_during_games"] = false
+		if ongoing_game:
+			AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"),true)
+
+func _on_hide_found_cards_checkbox_pressed():
+	if $DrawOnTop/SettingsPanel/HideFoundCardsCheckbox.button_pressed:
+		$DrawOnTop/SettingsPanel/HideFoundCardsCheckbox.icon = checked_sprite
+		settings["hide_found_cards"] = true
+		if ongoing_game:
+			for i in 5:
+				for v in 5:
+					var card = ongoing_game.cards[i][v]
+					if card["found"]:
+						card["node"].text = ""
+	else:
+		$DrawOnTop/SettingsPanel/HideFoundCardsCheckbox.icon = unchecked_sprite
+		settings["hide_found_cards"] = false
+		if ongoing_game:
+			for i in 5:
+				for v in 5:
+					var card = ongoing_game.cards[i][v]
+					if card["found"]:
+						card["node"].text = card["text"]
