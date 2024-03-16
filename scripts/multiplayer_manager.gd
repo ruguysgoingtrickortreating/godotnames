@@ -5,6 +5,7 @@ signal player_removed
 signal connected_to_server()
 signal connection_failed
 signal disconnected(code)
+signal server_disconnected()
 
 var peer:ENetMultiplayerPeer
 var local_name:String
@@ -63,19 +64,20 @@ func _register_new_player(plr_name):
 	player_added.emit(id)
 
 func _remove_player(id):
-	if id == 1 and not peer.get_unique_id() == 1:
-		disconnect_network()
+	if id == 1:
+		disconnect_network(1)
+		server_disconnected.emit()
 		return
 	player_removed.emit(id, players[id].name)
 	players.erase(id)
 
 func disconnect_network(code:int = 0):
+	players.clear()
 	multiplayer.multiplayer_peer.close()
 	peer = null
 	local_name = ""
 	connected_ip = ""
 	connected_port = 0
-	players.clear()
 	disconnected.emit(code)
 
 @rpc("authority","reliable")
@@ -100,9 +102,10 @@ func _player_disconnected(id):
 
 func _server_disconnected():
 	disconnect_network(1)
+	server_disconnected.emit()
 
 func _ready():
 	multiplayer.peer_disconnected.connect(_player_disconnected)
 	multiplayer.connected_to_server.connect(_connected_to_server) #CONNECTING CLIENT ONLY
 	#multiplayer.connection_failed.connect(_connection_failed)
-	multiplayer.server_disconnected.connect(_server_disconnected)
+	#multiplayer.server_disconnected.connect(_server_disconnected)

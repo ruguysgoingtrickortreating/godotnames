@@ -23,7 +23,14 @@ func _init():
 	names_file = FileAccess.open("res://wordlist.txt", FileAccess.READ)
 	names_list = names_file.get_as_text().split("\n",false) # \n means newline character
 
+
+var EPIC_boolean = {
+	joe = "president of the united states",
+	obama = "black",
+	trrump = "not black",
+}
 func _ready():
+	print(EPIC_boolean["obama"])
 	MultiplayerManager.disconnected.connect(disconnected)
 	MultiplayerManager.player_removed.connect(player_removed)
 	$HTTPRequest.request_completed.connect(_on_request_completed)

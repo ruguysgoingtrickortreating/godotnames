@@ -19,6 +19,7 @@ func _ready():
 	MultiplayerManager.connected_to_server.connect(connected_to_server)
 	MultiplayerManager.player_removed.connect(player_removed)
 	MultiplayerManager.disconnected.connect(disconnected)
+	MultiplayerManager.server_disconnected.connect(host_disconnected)
 
 func player_added(id):
 	add_to_playerlist(id)
@@ -169,21 +170,23 @@ func set_idcard_blue(idcard):
 func disconnected(code):
 	self.visible = false
 	$".."/ConnectUI.visible = true
-	disconnect_with_error("DISCONNECTED: HOST LEFT")
 	for i in idcards:
 		idcards[i].queue_free()
 	idcards.clear()
+	if main.ongoing_game:
+		print(main.ongoing_game)
+		main.end_game()
 	$StartButton.visible = false
 	$GameSettingsPanel/RandomizeTeamsButton.visible = false
 	$LeaveButton.position = Vector2(852,472)
 	$GameSettingsPanel/InputBlockPanel.visible = true
 
-func disconnect_with_error(error):
+func host_disconnected():
+	create_error("DISCONNECTED: HOST LEFT")
+
+func create_error(error):
 	$".."/DrawOnTop/WarningPanel/WarningText.text = error
 	$".."/DrawOnTop/WarningPanel.visible = true
-	if main.ongoing_game:
-		print(main.ongoing_game)
-		main.end_game()
 
 func _on_hosting():
 	$".."/LobbyUI/InfoPanel/HostBox.text = "HOST: "+MultiplayerManager.players[1].name
